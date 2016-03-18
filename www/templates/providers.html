@@ -1,20 +1,14 @@
 <ion-view view-title="Providers">
     <ion-nav-buttons side="right">
-        <button class="button button-icon ion-ios-search"
-                ng-click="showProvFilterBar()"></button>
+        <button class="button button-icon ion-ios-search" ng-click="showProvFilterBar()"></button>
     </ion-nav-buttons>
     <ion-content>
-        <ion-refresher
-                pulling-text="Pull to refresh..."
-                on-refresh="doProvRefresh()">
+        <ion-refresher pulling-text="Pull to refresh..." on-refresh="doProvRefresh()">
         </ion-refresher>
 
-        <ion-list show-delete="shouldShowDelete"
-                  show-reorder="shouldShowReorder"
-                  can-swipe="listCanSwipe">
-            <ion-item class="item-remove-animate item-icon-left item-icon-right" ng-repeat="provider in providers"
-                      type="item-text-wrap" href="#/tab/providers/{{provider._id}}">
-                <i class="icon ion-cube" ></i>
+        <ion-list show-delete="shouldShowDelete" show-reorder="shouldShowReorder" can-swipe="listCanSwipe">
+            <ion-item class="item-remove-animate item-icon-left item-icon-right" ng-repeat="provider in providers" type="item-text-wrap" href="#/tab/providers/{{provider._id}}">
+                <i class="icon ion-cube"></i>
                 <h2>{{provider.name}}</h2>
                 <p>{{provider.contact}}
                 </p>

@@ -1,46 +1,45 @@
 <ion-view view-title="{{title}}">
-  <ion-nav-buttons side="right">
-      <button class="button button-clear button-positive" ng-click="saveEvent()" ng-disabled="addEventForm.$invalid">Save</button>
-  </ion-nav-buttons>
+    <ion-nav-buttons side="right">
+        <button class="button button-clear button-positive" ng-click="saveEvent()" ng-disabled="addEventForm.$invalid">Save</button>
+    </ion-nav-buttons>
     <ion-content>
         <!--<img ng-src="{{chat.face}}" style="width: 64px; height: 64px">-->
         <form name="addEventForm" novalidate ng-submit="saveEvent(addEventForm)">
-        <div class="list">
-          <div class="item item-divider">
-            Main info
-          </div>
-            <label class="item item-input item-stacked-label">
-                <span class="input-label">Title</span>
-                <input type="text" placeholder="Title" name="curso" ng-model="event.curso" required>
-            </label>
-            <div class="error-container" ng-show="addEventForm.curso.$invalid && !addEventForm.curso.$pristine" ng-messages="addEventForm.curso.$error">
-                <div ng-messages-include="error-list.html"></div>
-            </div>
-            <label class="item item-input item-select">
-                <div class="input-label">
-                    Type
+            <div class="list">
+                <div class="item item-divider">
+                    Main info
                 </div>
-                <select ng-model="event.eventtype">
-                    <option value="private">Private</option>
-                    <option value="public">Public</option>
-                </select>
-            </label>
-            <label class="item item-input item-stacked-label">
-                <span class="input-label">Customer</span>
-                <input type="text" placeholder="Customer" ng-model="event.cliente">
-            </label>
-            <label class="item item-input item-select">
-                <div class="input-label">
-                    Status
+                <label class="item item-input item-stacked-label">
+                    <span class="input-label">Title</span>
+                    <input type="text" placeholder="Title" name="curso" ng-model="event.curso" required>
+                </label>
+                <div class="error-container" ng-show="addEventForm.curso.$invalid && !addEventForm.curso.$pristine" ng-messages="addEventForm.curso.$error">
+                    <div ng-messages-include="error-list.html"></div>
                 </div>
-                <select ng-model="event.status"
-                        ng-options="status as status.name for status in statuses track by status._id">
-                </select>
-            </label>
-            <div class="item item-divider">
-              Instructors
-            </div>
-            <span ng-repeat="inst in event.instructores">
+                <label class="item item-input item-select">
+                    <div class="input-label">
+                        Type
+                    </div>
+                    <select ng-model="event.eventtype">
+                        <option value="private">Private</option>
+                        <option value="public">Public</option>
+                    </select>
+                </label>
+                <label class="item item-input item-stacked-label">
+                    <span class="input-label">Customer</span>
+                    <input type="text" placeholder="Customer" ng-model="event.cliente">
+                </label>
+                <label class="item item-input item-select">
+                    <div class="input-label">
+                        Status
+                    </div>
+                    <select ng-model="event.status" ng-options="status as status.name for status in statuses track by status._id">
+                    </select>
+                </label>
+                <div class="item item-divider">
+                    Instructors
+                </div>
+                <span ng-repeat="inst in event.instructores">
                 <label class="item item-input item-select">
                     <div class="input-label">
                         Instructors
@@ -66,39 +65,35 @@
                     </select>
                 </label>
             </span>
-            <div class="item item-divider">
-              Additional Info
-            </div>
-            <label class="item item-input item-stacked-label">
-                <textarea placeholder="Comments" ng-model="event.comentarios"></textarea>
-            </label>
-            <label class="item item-input item-select">
-                <div class="input-label">
-                    Locations
+                <div class="item item-divider">
+                    Additional Info
+                </div>
+                <label class="item item-input item-stacked-label">
+                    <textarea placeholder="Comments" ng-model="event.comentarios"></textarea>
+                </label>
+                <label class="item item-input item-select">
+                    <div class="input-label">
+                        Locations
                     </div>
-                <select ng-model="event.location"
-                        ng-options="location as location.name for location in locations track by location._id">
-                </select>
-              </label>
-        </div>
-        <button class="button button-block button-positive" type="submit" ng-disabled="addEventForm.$invalid">
-          Save
-        </button>
-    </form>
+                    <select ng-model="event.location" ng-options="location as location.name for location in locations track by location._id">
+                    </select>
+                </label>
+            </div>
+            <button class="button button-block button-positive" type="submit" ng-disabled="addEventForm.$invalid">
+                Save
+            </button>
+        </form>
     </ion-content>
 </ion-view>
 
 <script id="error-list.html" type="text/ng-template">
     <div class="error" ng-message="required">
-      <i class="ion-information-circled"></i>
-      This field is required!
+        <i class="ion-information-circled"></i> This field is required!
     </div>
     <div class="error" ng-message="minlength">
-      <i class="ion-information-circled"></i>
-      Minimum length of this field is 5 characters!
+        <i class="ion-information-circled"></i> Minimum length of this field is 5 characters!
     </div>
     <div class="error" ng-message="maxlength">
-      <i class="ion-information-circled"></i>
-      Maximum length of this field is 20 characters!
+        <i class="ion-information-circled"></i> Maximum length of this field is 20 characters!
     </div>
-  </script>
+</script>

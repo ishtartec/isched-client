@@ -1,21 +1,15 @@
 <ion-view view-title="Instructors">
     <ion-nav-buttons side="right">
-        <button class="button button-icon ion-ios-search"
-                ng-click="showInstFilterBar()"></button>
+        <button class="button button-icon ion-ios-search" ng-click="showInstFilterBar()"></button>
     </ion-nav-buttons>
     <ion-content>
-        <ion-refresher
-                pulling-text="Pull to refresh..."
-                on-refresh="doInstRefresh()">
+        <ion-refresher pulling-text="Pull to refresh..." on-refresh="doInstRefresh()">
         </ion-refresher>
 
-        <ion-list show-delete="shouldShowDelete"
-                  show-reorder="shouldShowReorder"
-                  can-swipe="listCanSwipe">
-            <ion-item class="item-remove-animate item-icon-left item-icon-right" ng-repeat="instructor in instructors"
-                      type="item-text-wrap" href="#/tab/instructors/{{instructor._id}}">
+        <ion-list show-delete="shouldShowDelete" show-reorder="shouldShowReorder" can-swipe="listCanSwipe">
+            <ion-item class="item-remove-animate item-icon-left item-icon-right" ng-repeat="instructor in instructors" type="item-text-wrap" href="#/tab/instructors/{{instructor._id}}">
                 <!--<img ng-src="{{chat.face}}">-->
-                <i class="icon ion-ios-person" ng-class="{true: 'balanced', false:'assertive'}[instructor.interno]" ></i>
+                <i class="icon ion-ios-person" ng-class="{true: 'balanced', false:'assertive'}[instructor.interno]"></i>
                 <h2>{{instructor.name}}</h2>
                 <p>{{instructor.email}}
                 </p>

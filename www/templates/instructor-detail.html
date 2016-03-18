@@ -6,8 +6,7 @@
 -->
 <ion-view view-title="{{instructor.name}}">
     <ion-nav-buttons side="right">
-        <button class="button button-icon ion-ios-close-empty"
-                ng-click="closeInstView()"></button>
+        <button class="button button-icon ion-ios-close-empty" ng-click="closeInstView()"></button>
     </ion-nav-buttons>
     <ion-content class="padding">
         <!--<img ng-src="{{chat.face}}" style="width: 64px; height: 64px">-->
@@ -16,12 +15,16 @@
         <span class="badge badge-positive">{{ instructor.interno ? 'Internal' : 'External' }}</span>
         <span class="badge badge-assertive" ng-show="instructor.contractor">Contractor</span>
         <p>
-            <strong>Phone:</strong> <a ng-href="tel:{{instructor.phone}}">{{instructor.phone}}</a><br/>
-            <strong>Region:</strong> {{instructor.region}}<br/>
-            <strong>Rate:</strong> {{instructor.rate}}<br/>
-            <strong>Languages:</strong> {{instructor.languages}}<br/>
-            <strong>Comments:</strong> <span ng-bind-html="instructor.comments"></span><br/>
-
+            <strong>Phone:</strong> <a ng-href="tel:{{instructor.phone}}">{{instructor.phone}}</a>
+            <br/>
+            <strong>Region:</strong> {{instructor.region}}
+            <br/>
+            <strong>Rate:</strong> {{instructor.rate}}
+            <br/>
+            <strong>Languages:</strong> {{instructor.languages}}
+            <br/>
+            <strong>Comments:</strong> <span ng-bind-html="instructor.comments"></span>
+            <br/>
         </p>
     </ion-content>
 </ion-view>
