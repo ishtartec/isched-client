@@ -1,0 +1,51 @@
+<ion-view view-title="Events">
+    <ion-nav-buttons side="left">
+        <button class="button button-icon icon ion-ios-plus-outline"
+                ng-click="addEvent()"></button>
+    </ion-nav-buttons>
+    <ion-nav-buttons side="right">
+        <button class="button button-icon ion-ios-search"
+                ng-click="showFilterBar()"></button>
+    </ion-nav-buttons>
+    <ion-content>
+        <ion-refresher
+                pulling-text="Pull to refresh..."
+                on-refresh="doRefresh()">
+        </ion-refresher>
+
+        <ion-list show-delete="shouldShowDelete"
+                  show-reorder="shouldShowReorder"
+                  can-swipe="listCanSwipe">
+            <ion-item ng-if="events.length === 0">
+                Press <i class="icon ion-ios-plus-outline"></i> to add an event
+            </ion-item>
+            <ion-item class="item-remove-animate item-icon-left item-icon-right" ng-repeat="event in events"
+                      type="item-text-wrap" href="#/tab/chats/{{event._id}}">
+                <!--<img ng-src="{{chat.face}}">-->
+                <i class="icon ion-calendar" ng-style="{'color': event.status.color}"></i>
+                <h2>{{event.shortName || event.curso}}</h2>
+                <p>{{event.location.name}}<br/>
+                    <small>{{ event.fechainicio | date:'short' : 'UTC' }} - {{ event.fechafin | date:'short' : 'UTC' }}</small>
+                    <span class="badge badge-positive" ng-style="{'background-color': event.status.color}">{{ event.status.name }}</span>
+                </p>
+                <i class="icon ion-chevron-right icon-accessory"></i>
+
+                <ion-option-button class="button-positive"
+                                   ng-click="shareEvent(event)">
+                    Share
+                </ion-option-button>
+                <ion-option-button class="button-assertive"
+                                   ng-click="editEvent(event)">
+                    Edit
+                </ion-option-button>
+                <ion-delete-button class="ion-minus-circled"
+                                   ng-click="items.splice($index, 1)">
+                </ion-delete-button>
+            </ion-item>
+        </ion-list>
+
+        <div ng-if="events !== undefined && !events.length" class="no-results">
+            <p>No Results</p>
+        </div>
+    </ion-content>
+</ion-view>

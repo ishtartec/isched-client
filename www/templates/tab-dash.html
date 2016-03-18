@@ -1,0 +1,102 @@
+<ion-view view-title="Dashboard">
+    <ion-content class="padding">
+        <h2>iSched</h2>
+        <small>{{settings.userName}} - {{settings.email}}</small>
+        <ion-refresher
+                pulling-text="Pull to refresh..."
+                on-refresh="doRefresh()">
+        </ion-refresher>
+        <div class="list card">
+            <div class="item item-divider balanced-bg">
+                Week
+            </div>
+            <a href="#" class="item item-icon-left">
+                <i class="icon ion-arrow-graph-up-right assertive"></i>
+                {{stats.coursesWeek}} courses
+            </a>
+
+            <a href="#" class="item item-icon-left">
+                <i class="icon ion-person-stalker calm"></i>
+                {{stats.studentsWeek}} students
+            </a>
+
+            <a href="#" class="item item-icon-left">
+                <i class="icon ion-speedometer royal"></i>
+                {{stats.hoursWeek}} training days
+            </a>
+
+            <a href="#" class="item item-icon-left">
+                <i class="icon ion-card balanced"></i>
+                {{stats.invoiceWeek | currency:'€'}}
+            </a>
+        </div>
+        <div class="list card">
+            <div class="item item-divider positive-bg">
+                Month
+            </div>
+            <a href="#" class="item item-icon-left">
+                <i class="icon ion-arrow-graph-up-right assertive"></i>
+                {{stats.coursesMonth}} courses
+            </a>
+
+            <a href="#" class="item item-icon-left">
+                <i class="icon ion-person-stalker calm"></i>
+                {{stats.studentsMonth}} students
+            </a>
+
+            <a href="#" class="item item-icon-left">
+                <i class="icon ion-speedometer royal"></i>
+                {{stats.hoursMonth}} training days
+            </a>
+
+            <a href="#" class="item item-icon-left">
+                <i class="icon ion-card balanced"></i>
+                {{stats.invoiceMonth | currency:'€'}}
+            </a>
+        </div>
+        <div class="list card">
+            <div class="item item-divider energized-bg">
+                Year
+            </div>
+            <a href="#" class="item item-icon-left">
+                <i class="icon ion-arrow-graph-up-right assertive"></i>
+                {{stats.coursesYear}} courses
+            </a>
+
+            <a href="#" class="item item-icon-left">
+                <i class="icon ion-person-stalker calm"></i>
+                {{stats.studentsYear}} students
+            </a>
+
+            <a href="#" class="item item-icon-left">
+                <i class="icon ion-speedometer royal"></i>
+                {{stats.hoursYear}} training days
+            </a>
+
+            <a href="#" class="item item-icon-left">
+                <i class="icon ion-card balanced"></i>
+                {{stats.invoiceYear | currency:'€'}}
+            </a>
+        </div>
+        <!--
+        <div class="card">
+            <div class="item item-divider">
+                Week
+            </div>
+            <div class="item item-text-wrap">
+                {{ stats.coursesWeek }}
+                <p></p>
+                <strong>From: {{ event.fechainicio | date:'short' : 'UTC' }}</strong><br/>
+                <strong>To: {{ event.fechafin | date:'short' : 'UTC' }}</strong>
+                <p ng-if="event.statusAdded">This event is added to your calendar already!</p>
+                <button ng-if="!event.statusAdded" ng-click="addEvent(event,$index)" class="button button-block button-balanced">Add to Calendar</button>
+
+            </div>
+        </div>
+        -->
+
+        <div ng-if="events !== undefined && !events.length" class="no-results">
+            <p>No Results</p>
+        </div>
+    </ion-content>
+</ion-view>

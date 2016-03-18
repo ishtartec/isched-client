@@ -1,0 +1,58 @@
+<!--
+This template loads for the 'tab.friend-detail' state (app.js)
+'friend' is a $scope variable created in the FriendsCtrl controller (controllers.js)
+The FriendsCtrl pulls data from the Friends service (service.js)
+The Friends service returns an array of friend data
+-->
+<ion-view view-title="{{event.shortName}}">
+  <ion-content class="padding">
+    <!--<img ng-src="{{chat.face}}" style="width: 64px; height: 64px">-->
+    <h2>{{event.shortName}}</h2>
+    <h4>{{event.curso}}</h4>
+    <span class="badge badge-positive" ng-style="{'background-color': event.status.color}">{{ event.status.name }}</span>
+    <p>
+      <strong>Date: </strong> {{event.fechainicio | date:'short':'UTC'}} - {{event.fechafin |
+        date:'short':'UTC'}}<br/>
+        <strong>Customer:</strong> {{event.cliente}}<br/>
+        <strong>Invoice:</strong> {{event.factura | currency:'€'}}<br/>
+        <strong>Comments:</strong> <span ng-bind-html="event.comentarios"></span><br/>
+        <strong>Students:</strong> {{event.alumnos}}<br/>
+        <strong>EventID:</strong> {{event.eventid}}<br/>
+        <strong>Instructors:</strong>
+        <ion-list>
+          <ion-item class="item-icon-left" ng-repeat="inst in event.instructores" ng-href="#/tab/instructors/{{inst.name._id}}">
+            <i class="icon ion-ios-contact"></i>
+            {{inst.name.name}} <small>&lt;{{inst.name.email}}&gt;</small><br/>
+            <small>{{inst.start | date:'short': 'UTC'}} - {{inst.end | date:'short': 'UTC'}}</small>
+          </ion-item>
+        </ion-list>
+        <br/>
+        <strong>Location: </strong>
+        <ul>
+          <li><span ng-bind-html="event.location.address.details.adr_address"></span></li>
+          <li>TZ: {{event.location.address.details.tz}}</li>
+          <li>Contact: {{event.location.contact.name}} {{event.location.contact.email}}</li>
+          <li>Phone: {{event.location.contact.phone}}</li>
+          <li>Lunch included: {{event.location.lunch}}</li>
+          <li>International Phone:
+            {{event.location.address.details.international_phone_number}}
+          </li>
+          <li>Website: <a ng-href="{{event.location.address.details.website}}"
+            target="_blank">{{event.location.address.details.website}}</a></li>
+            <li>Workstations #: {{curso.location.workstations}}</li>
+            <li>Description: <span ng-bind-html="event.location.description"></span></li>
+            <li>Opening hours:</li>
+            <ul>
+              <li ng-repeat="day in event.location.address.details.opening_hours.weekday_text">
+                {{day}}
+              </li>
+            </ul>
+          </ul>
+
+        </p>
+        <div class="button-bar">
+          <a class="button button-positive" ng-click="editEvent()">Edit</a>
+          <a class="button button-assertive" ng-click="deleteEvent()">Delete</a>
+        </div>
+      </ion-content>
+    </ion-view>

@@ -1,0 +1,26 @@
+<ion-view view-title="Account">
+    <ion-content>
+        <ion-list>
+            <label class="item item-input item-floating-label">
+                <span class="input-label">Server URL</span>
+                <input type="text" placeholder="Server URL" ng-model="settings.serverUrl">
+            </label>
+            <label class="item item-input item-floating-label">
+                <span class="input-label">User</span>
+                <input type="email" placeholder="User" ng-model="settings.user">
+            </label>
+            <label class="item item-input item-floating-label">
+                <span class="input-label">API Key</span>
+                <input type="text" placeholder="API Key" ng-model="settings.apiKey">
+            </label>
+            <!--
+            <ion-toggle ng-model="settings.enableFriends">
+                Enable Friends
+            </ion-toggle>
+            -->
+        </ion-list>
+        <button class="button button-block button-positive button-balanced" ng-click="saveSettings()">
+            Save Settings
+        </button>
+    </ion-content>
+</ion-view>
