@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('DashCtrl', function($scope, $ionicPlatform, $ionicPopup, $ionicLoading, AppSettings, stats, settings, $state) {
+.controller('DashCtrl', function($scope, $ionicPlatform, AppSettings, stats, settings, $state) {
     console.log('DashCtrl');
     $ionicPlatform.ready(function() {
         $scope.stats = stats;
@@ -14,21 +14,9 @@ angular.module('starter.controllers', [])
         $scope.$broadcast('scroll.refreshComplete');
     };
 
-    // An alert dialog
-    $scope.showAlert = function(message) {
-        var template = message ? message : 'Please, review settings...';
-        var alertPopup = $ionicPopup.alert({
-            title: 'Ups!',
-            template: template
-        });
-
-        alertPopup.then(function(res) {
-            console.log('Thank you for not eating my delicious ice cream cone');
-        });
-    };
 })
 
-.controller('ChatsCtrl', function($scope, events, $state, $ionicPlatform, $ionicFilterBar, $cordovaSocialSharing) {
+.controller('ChatsCtrl', function($scope, events, $state, $ionicPlatform, $ionicFilterBar, $cordovaSocialSharing, Events) {
     // With the new view caching in Ionic, Controllers are only called
     // when they are recreated or on app start, instead of every page change.
     // To listen for when this page is active (for example, to refresh data),
@@ -39,30 +27,20 @@ angular.module('starter.controllers', [])
 
 
     var filterBarInstance;
-
-    $ionicPlatform.ready(function() {
-        $scope.events = events;
-
-    });
+    $scope.events = events;
+    console.log('Renewed events');
 
     $scope.doRefresh = function() {
+        Events.getEvents().then(function(result) {
+            $scope.events = result;
+        });
+        /*
         $state.reload();
-        //$state.transitionTo($state.current, $state.$current.params, { reload: true, inherit: true, notify: true });//reload
-        //$scope.events = events;
+        $state.go($state.current, {}, {cache: false, reload:true});
+        $ionicHistory.clearCache().then(function(){ $state.go('tab.chats');});
+        $scope.events = events;
+        */
         $scope.$broadcast('scroll.refreshComplete');
-    };
-
-    // An alert dialog
-    $scope.showAlert = function(message) {
-        var template = message ? message : 'Please, review settings...';
-        var alertPopup = $ionicPopup.alert({
-            title: 'Ups!',
-            template: template
-        });
-
-        alertPopup.then(function(res) {
-            console.log('Thank you for not eating my delicious ice cream cone');
-        });
     };
 
     $scope.showFilterBar = function() {
@@ -95,7 +73,7 @@ angular.module('starter.controllers', [])
 })
 
 .controller('AddEditEventCtrl', function($scope, event, statuses, instructors, utilizations,
-    locations, Events, $ionicHistory) {
+    locations, Events, $ionicHistory, $state) {
     $scope.statuses = statuses;
     $scope.event = event;
     $scope.utilizations = utilizations;
@@ -119,12 +97,20 @@ angular.module('starter.controllers', [])
             $scope.event.fechafin = $scope.event.instructores[0].end;
             Events.add(event).then(function(result) {
                 console.log('Stored event successfully');
-                $ionicHistory.goBack();
+                //$ionicHistory.goBack();
+                $ionicHistory.clearCache().then(function() {
+                    $state.go('tab.chats');
+                });
             });
         } else {
             Events.update(event).then(function(result) {
                 console.log('Updated event successfully');
-                $ionicHistory.goBack();
+                //$ionicHistory.goBack();
+                $ionicHistory.clearCache().then(function() {
+                    $state.go('tab.chat-detail', {
+                        eventId: event._id
+                    });
+                });
             });
         }
     };
@@ -177,7 +163,7 @@ angular.module('starter.controllers', [])
             AppSettings.saveSettings($scope.settings);
         };
     })
-    .controller('InstructorsCtrl', function($scope, instructors, $ionicFilterBar, $ionicPopup, $ionicLoading) {
+    .controller('InstructorsCtrl', function($scope, instructors, $ionicFilterBar, $ionicPopup) {
 
         var sort_by;
         var filterBarInstance;
@@ -264,20 +250,6 @@ angular.module('starter.controllers', [])
                 filterProperties: ['name']
             });
         };
-
-        // An alert dialog
-        $scope.showAlert = function(message) {
-            var template = message ? message : 'Please, review settings...';
-            var alertPopup = $ionicPopup.alert({
-                title: 'Ups!',
-                template: template
-            });
-
-            alertPopup.then(function(res) {
-                console.log('Thank you for not eating my delicious ice cream cone');
-            });
-        };
-
 
     })
     .controller('InstructorDetailCtrl', function($scope, instructor, $ionicHistory) {

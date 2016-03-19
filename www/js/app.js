@@ -6,12 +6,11 @@
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'ngCordova',
-    'jett.ionic.filter.bar',
-    'ion-datetime-picker', 'ngMessages'
-])
+'jett.ionic.filter.bar',
+'ion-datetime-picker', 'ngMessages'])
 
-.run(function($ionicPlatform, $ionicLoading, $rootScope) {
-    $ionicPlatform.ready(function() {
+.run(function ($ionicPlatform, $ionicLoading, $rootScope) {
+    $ionicPlatform.ready(function () {
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
         // for form inputs)
         if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
@@ -24,30 +23,28 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
             StatusBar.styleDefault();
         }
     });
-    $rootScope.$on('loading:show', function() {
-        $ionicLoading.show({
-            template: 'Loading...'
-        });
+    $rootScope.$on('loading:show', function () {
+        $ionicLoading.show({template: 'Loading...'});
     });
 
-    $rootScope.$on('loading:hide', function() {
+    $rootScope.$on('loading:hide', function () {
         $ionicLoading.hide();
     });
 })
 
-.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
+.config(function ($stateProvider, $urlRouterProvider, $httpProvider) {
 
-    $httpProvider.interceptors.push(function($rootScope) {
+    $httpProvider.interceptors.push(function ($rootScope) {
         return {
-            request: function(config) {
+            request: function (config) {
                 $rootScope.$broadcast('loading:show');
                 return config;
             },
-            response: function(response) {
+            response: function (response) {
                 $rootScope.$broadcast('loading:hide');
                 return response;
             },
-            requestError: function(rejectReason) {
+            requestError: function (rejectReason) {
                 $rootScope.$broadcast('loading:hide');
                 return rejectReason;
             }
@@ -61,7 +58,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     $stateProvider
 
     // setup an abstract state for the tabs directive
-        .state('tab', {
+    .state('tab', {
         url: '/tab',
         abstract: true,
         templateUrl: 'templates/tabs.html'
@@ -72,10 +69,10 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     .state('tab.dash', {
         url: '/dash',
         resolve: {
-            stats: function(Events) {
+            stats: function (Events) {
                 return Events.getStats();
             },
-            settings: function(AppSettings) {
+            settings: function (AppSettings) {
                 return AppSettings.getSettings();
             }
         },
@@ -88,172 +85,168 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     })
 
     .state('tab.chats', {
-            url: '/chats',
-            cache: false,
-            resolve: {
-                events: function(Events) {
-                    return Events.getEvents();
-                }
-            },
-            views: {
-                'tab-chats': {
-                    templateUrl: 'templates/tab-chats.html',
-                    controller: 'ChatsCtrl'
-                }
+        url: '/chats',
+        cache: true,
+        resolve: {
+            events: function (Events) {
+                return Events.getEvents();
             }
-        })
-        .state('tab.chat-detail', {
-            url: '/chats/:eventId',
-            resolve: {
-                event: function(Events, $stateParams) {
-                    return Events.get($stateParams.eventId);
-                }
-            },
-            views: {
-                'tab-chats': {
-                    templateUrl: 'templates/chat-detail.html',
-                    controller: 'ChatDetailCtrl'
-                }
+        },
+        views: {
+            'tab-chats': {
+                templateUrl: 'templates/tab-chats.html',
+                controller: 'ChatsCtrl'
             }
-        })
+        }
+    })
+    .state('tab.chat-detail', {
+        url: '/chats/:eventId',
+        resolve: {
+            event: function (Events, $stateParams) {
+                return Events.get($stateParams.eventId);
+            }
+        },
+        views: {
+            'tab-chats': {
+                templateUrl: 'templates/chat-detail.html',
+                controller: 'ChatDetailCtrl'
+            }
+        }
+    })
 
     .state('tab.account', {
-            url: '/account',
-            views: {
-                'tab-account': {
-                    templateUrl: 'templates/tab-account.html',
-                    controller: 'AccountCtrl'
-                }
+        url: '/account',
+        views: {
+            'tab-account': {
+                templateUrl: 'templates/tab-account.html',
+                controller: 'AccountCtrl'
             }
-        })
-        .state('tab.more', {
-            url: '/more',
-            views: {
-                'tab-more': {
-                    templateUrl: 'templates/tab-more.html',
-                    controller: 'MoreCtrl'
-                }
+        }
+    })
+    .state('tab.more', {
+        url: '/more',
+        views: {
+            'tab-more': {
+                templateUrl: 'templates/tab-more.html',
+                controller: 'MoreCtrl'
             }
-        })
-        .state('tab.instructors', {
-            url: '/instructors',
-            resolve: {
-                instructors: function(Instructors) {
-                    return Instructors.getInstructors();
-                }
+        }
+    })
+    .state('tab.instructors', {
+        url: '/instructors',
+        resolve: {
+            instructors: function (Instructors) {
+                return Instructors.getInstructors();
+            }
+        },
+        views: {
+            'tab-more': {
+                templateUrl: 'templates/instructors.html',
+                controller: 'InstructorsCtrl'
+            }
+        }
+    })
+    .state('tab.instructor-detail', {
+        url: '/instructors/:instructorId',
+        resolve: {
+            instructor: function (Instructors, $stateParams) {
+                return Instructors.get($stateParams.instructorId);
+            }
+        },
+        views: {
+            'tab-more': {
+                templateUrl: 'templates/instructor-detail.html',
+                controller: 'InstructorDetailCtrl'
+            }
+        }
+    })
+    .state('tab.providers', {
+        url: '/providers',
+        resolve: {
+            providers: function (Providers) {
+                return Providers.getProviders();
+            }
+        },
+        views: {
+            'tab-more': {
+                templateUrl: 'templates/providers.html',
+                controller: 'ProvidersCtrl'
+            }
+        }
+    })
+    .state('tab.providers-detail', {
+        url: '/providers/:providerId',
+        resolve: {
+            provider: function (Providers, $stateParams) {
+                return Providers.get($stateParams.providerId);
+            }
+        },
+        views: {
+            'tab-more': {
+                templateUrl: 'templates/provider-detail.html',
+                controller: 'ProviderDetailCtrl'
+            }
+        }
+    })
+    .state('tab.edit-event', {
+        url: '/editevent/:eventId',
+        resolve: {
+            statuses: function (Statuses) {
+                return Statuses.getStatuses();
             },
-            views: {
-                'tab-more': {
-                    templateUrl: 'templates/instructors.html',
-                    controller: 'InstructorsCtrl'
-                }
-            }
-        })
-        .state('tab.instructor-detail', {
-            url: '/instructors/:instructorId',
-            resolve: {
-                instructor: function(Instructors, $stateParams) {
-                    return Instructors.get($stateParams.instructorId);
-                }
+            instructors: function (Instructors) {
+                return Instructors.getInstructors();
             },
-            views: {
-                'tab-more': {
-                    templateUrl: 'templates/instructor-detail.html',
-                    controller: 'InstructorDetailCtrl'
-                }
-            }
-        })
-        .state('tab.providers', {
-            url: '/providers',
-            resolve: {
-                providers: function(Providers) {
-                    return Providers.getProviders();
-                }
+            utilizations: function (Utilizations) {
+                return Utilizations.getUtilizations();
             },
-            views: {
-                'tab-more': {
-                    templateUrl: 'templates/providers.html',
-                    controller: 'ProvidersCtrl'
-                }
-            }
-        })
-        .state('tab.providers-detail', {
-            url: '/providers/:providerId',
-            resolve: {
-                provider: function(Providers, $stateParams) {
-                    return Providers.get($stateParams.providerId);
-                }
+            locations: function (Locations) {
+                return Locations.getLocations();
             },
-            views: {
-                'tab-more': {
-                    templateUrl: 'templates/provider-detail.html',
-                    controller: 'ProviderDetailCtrl'
-                }
+            event: function (Events, $stateParams) {
+                return Events.get($stateParams.eventId);
             }
-        })
-        .state('tab.edit-event', {
-            url: '/editevent/:eventId',
-            resolve: {
-                statuses: function(Statuses) {
-                    return Statuses.getStatuses();
-                },
-                instructors: function(Instructors) {
-                    return Instructors.getInstructors();
-                },
-                utilizations: function(Utilizations) {
-                    return Utilizations.getUtilizations();
-                },
-                locations: function(Locations) {
-                    return Locations.getLocations();
-                },
-                event: function(Events, $stateParams) {
-                    return Events.get($stateParams.eventId);
-                }
+        },
+        views: {
+            'tab-chats': {
+                templateUrl: 'templates/change-event.html',
+                controller: 'AddEditEventCtrl'
+            }
+        }
+    })
+    .state('tab.add-event', {
+        url: '/addevent',
+        resolve: {
+            statuses: function (Statuses) {
+                return Statuses.getStatuses();
             },
-            views: {
-                'tab-chats': {
-                    templateUrl: 'templates/change-event.html',
-                    controller: 'AddEditEventCtrl'
-                }
-            }
-        })
-        .state('tab.add-event', {
-            url: '/addevent',
-            resolve: {
-                statuses: function(Statuses) {
-                    return Statuses.getStatuses();
-                },
-                instructors: function(Instructors) {
-                    return Instructors.getInstructors();
-                },
-                utilizations: function(Utilizations) {
-                    return Utilizations.getUtilizations();
-                },
-                locations: function(Locations) {
-                    return Locations.getLocations();
-                },
-                event: function() {
-                    return {
-                        instructores: [{
-                            name: ''
-                        }]
-                    };
-                }
+            instructors: function (Instructors) {
+                return Instructors.getInstructors();
             },
-            views: {
-                'tab-chats': {
-                    templateUrl: 'templates/change-event.html',
-                    controller: 'AddEditEventCtrl'
-                }
+            utilizations: function (Utilizations) {
+                return Utilizations.getUtilizations();
+            },
+            locations: function (Locations) {
+                return Locations.getLocations();
+            },
+            event: function () {
+                return {instructores: [{name: ''}]};
             }
-        });
+        },
+        views: {
+            'tab-chats': {
+                templateUrl: 'templates/change-event.html',
+                controller: 'AddEditEventCtrl'
+            }
+        }
+    });
 
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('/tab/dash');
 
 })
 
-.config(function($provide, $httpProvider) {
+.config(function ($provide, $httpProvider) {
     $httpProvider.interceptors.push('RequestsErrorHandler');
     // --- Decorate $http to add a special header by default ---
     function addHeaderToConfig(config) {
@@ -267,15 +260,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     }
 
     // The rest here is mostly boilerplate needed to decorate $http safely
-    $provide.decorator('$http', ['$delegate', function($delegate) {
+    $provide.decorator('$http', ['$delegate', function ($delegate) {
         function decorateRegularCall(method) {
-            return function(url, config) {
+            return function (url, config) {
                 return $delegate[method](url, addHeaderToConfig(config));
             };
         }
 
         function decorateDataCall(method) {
-            return function(url, data, config) {
+            return function (url, data, config) {
                 return $delegate[method](url, data, addHeaderToConfig(config));
             };
         }
@@ -283,7 +276,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
         function delegateReturn(attr) {
             return $delegate[attr].apply($delegate, arguments);
         }
-
         function copyNotOverriddenAttributes(newHttp) {
             for (var attr in $delegate) {
                 if (!newHttp.hasOwnProperty(attr)) {
@@ -296,15 +288,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
             }
         }
 
-        var newHttp = function(config) {
+        var newHttp = function (config) {
             return $delegate(addHeaderToConfig(config));
         };
-        newHttp.get = decorateRegularCall('get');
+        newHttp.get    = decorateRegularCall('get');
         newHttp.delete = decorateRegularCall('delete');
-        newHttp.head = decorateRegularCall('head');
-        newHttp.jsonp = decorateRegularCall('jsonp');
-        newHttp.post = decorateDataCall('post');
-        newHttp.put = decorateDataCall('put');
+        newHttp.head   = decorateRegularCall('head');
+        newHttp.jsonp  = decorateRegularCall('jsonp');
+        newHttp.post   = decorateDataCall('post');
+        newHttp.put    = decorateDataCall('put');
         copyNotOverriddenAttributes(newHttp);
         return newHttp;
     }]);

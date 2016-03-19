@@ -5,6 +5,9 @@ The FriendsCtrl pulls data from the Friends service (service.js)
 The Friends service returns an array of friend data
 -->
 <ion-view view-title="{{event.shortName}}">
+    <ion-nav-buttons side="right">
+        <button class="button button-clear button-positive" ng-click="editEvent()">Edit</button>
+    </ion-nav-buttons>
     <ion-content class="padding">
         <!--<img ng-src="{{chat.face}}" style="width: 64px; height: 64px">-->
         <h2>{{event.shortName}}</h2>
