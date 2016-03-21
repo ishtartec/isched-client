@@ -112,7 +112,7 @@ angular.module('starter.services', [])
 
 })
 
-.factory('Events', function($q, $http, AppSettings) {
+.factory('Events', function($q, $http, AppSettings, Instructors) {
         var getEvents = function() {
             var settings = {};
             return AppSettings.getSettings().then(function(settings) {
@@ -133,6 +133,26 @@ angular.module('starter.services', [])
                     // or server returns response with an error status.
                     console.log('Error in response: ' + JSON.stringify(error));
                     return error;
+                });
+            });
+        };
+
+        var getInstructorEvents = function(instructorId) {
+            var settings = {};
+            return Instructors.get(instructorId).then(function (instructor) {
+                return AppSettings.getSettings().then(function(settings) {
+                    return $http({
+                        method: 'GET',
+                        url: settings.serverUrl + '/api/courses/calevents/' + instructor.email,
+                        headers: {
+                            'Authorization': 'Bearer ' + settings.token
+                        }
+                    }).then(function successCallback(response) {
+                        return response.data;
+                    }, function errorCallback(error) {
+                        console.log('Error in response: ' + JSON.stringify(error));
+                        return error;
+                    });
                 });
             });
         };
@@ -170,11 +190,8 @@ angular.module('starter.services', [])
                         'Authorization': 'Bearer ' + settings.token
                     }
                 }).then(function successCallback(response) {
-                    //console.log('Response: ' + JSON.stringify(response));
-                    //return callback(null, response);
                     return response.data;
                 }, function errorCallback(error) {
-                    //return callback(error);
                     return error;
                 });
             });
@@ -241,7 +258,8 @@ angular.module('starter.services', [])
             add: addEvent,
             delete: deleteEvent,
             update: updateEvent,
-            getStats: getStats
+            getStats: getStats,
+            getInstructorEvents: getInstructorEvents
         };
 
     })

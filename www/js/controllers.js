@@ -95,21 +95,32 @@ angular.module('starter.controllers', [])
         if (newEvent) {
             $scope.event.fechainicio = $scope.event.instructores[0].start;
             $scope.event.fechafin = $scope.event.instructores[0].end;
-            Events.add(event).then(function(result) {
+            Events.add($scope.event).then(function(result) {
                 console.log('Stored event successfully');
                 //$ionicHistory.goBack();
                 $ionicHistory.clearCache().then(function() {
-                    $state.go('tab.chats');
+                    $ionicHistory.goBack();
                 });
             });
         } else {
+            var datesStart = [];
+            var datesEnd   = [];
+            for (var i = 0; i < $scope.event.instructores.length; i++) {
+                datesStart.push(moment($scope.event.instructores[i].start).toDate());
+                datesEnd.push(moment($scope.event.instructores[i].end).toDate());
+            }
+            console.log('DatesStart: ' + datesStart);
+            console.log('DatesEnd: ' + datesEnd);
+            var maxDate=new Date(Math.max.apply(null,datesEnd));
+            var minDate=new Date(Math.min.apply(null,datesStart));
+            $scope.event.fechainicio = minDate;
+            $scope.event.fechafin = maxDate;
+            console.log('max and min are: ' + maxDate + ' - ' + minDate);
             Events.update(event).then(function(result) {
                 console.log('Updated event successfully');
                 //$ionicHistory.goBack();
                 $ionicHistory.clearCache().then(function() {
-                    $state.go('tab.chat-detail', {
-                        eventId: event._id
-                    });
+                    $ionicHistory.goBack();
                 });
             });
         }
@@ -252,8 +263,9 @@ angular.module('starter.controllers', [])
         };
 
     })
-    .controller('InstructorDetailCtrl', function($scope, instructor, $ionicHistory) {
+    .controller('InstructorDetailCtrl', function($scope, instructor, $ionicHistory, events) {
         $scope.instructor = instructor;
+        $scope.events = events;
         $scope.closeInstView = function() {
             //$ionicHistory.backView();
             //$ionicNavBarDelegate.back();

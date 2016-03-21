@@ -48,11 +48,11 @@
                             ng-options="instructor as instructor.name for instructor in instructors track by instructor._id">
                     </select>
                 </label>
-                <label class="item item-input" ion-datetime-picker am-pm ng-model="inst.start">
+                <label class="item item-input" ion-datetime-picker am-pm timezone="UTC" ng-model="inst.start">
                     Start:&nbsp;
                     <strong> {{inst.start| date: "yyyy-MM-dd h:mm a":'UTC'}}</strong>
                 </label>
-                <label class="item item-input" ion-datetime-picker am-pm ng-model="inst.end">
+                <label class="item item-input" ion-datetime-picker am-pm timezone="UTC" ng-model="inst.end">
                     End:&nbsp;
                     <strong> {{inst.end| date: "yyyy-MM-dd h:mm a":'UTC'}}</strong>
                 </label>

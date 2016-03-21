@@ -26,5 +26,39 @@
             <strong>Comments:</strong> <span ng-bind-html="instructor.comments"></span>
             <br/>
         </p>
+        <h4>Events for {{instructor.name}}</h4>
+        <ion-list show-delete="shouldShowDelete" show-reorder="shouldShowReorder" can-swipe="listCanSwipe">
+            <!--
+            <ion-item ng-if="events.length === 0">
+                Press <i class="icon ion-ios-plus-outline"></i> to add an event
+            </ion-item>
+        -->
+            <ion-item class="item-remove-animate item-icon-left item-icon-right" ng-repeat="event in events" type="item-text-wrap" href="#">
+                <!--<img ng-src="{{chat.face}}">-->
+                <i class="icon ion-calendar" ng-style="{'color': event.status.color}"></i>
+                <h2>{{event.shortName || event.curso}}</h2>
+                <p>{{event.location.name}}
+                    <br/>
+                    <small>{{ event.fechainicio | date:'short' : 'UTC' }} - {{ event.fechafin | date:'short' : 'UTC' }}</small>
+                    <span class="badge badge-positive" ng-style="{'background-color': event.status.color}">{{ event.status.name }}</span>
+                </p>
+                <!--
+                <i class="icon ion-chevron-right icon-accessory"></i>
+
+                <ion-option-button class="button-positive" ng-click="shareEvent(event)">
+                    Share
+                </ion-option-button>
+                <ion-option-button class="button-assertive" ng-click="editEvent(event)">
+                    Edit
+                </ion-option-button>
+                <ion-delete-button class="ion-minus-circled" ng-click="items.splice($index, 1)">
+                </ion-delete-button>
+            -->
+            </ion-item>
+        </ion-list>
+
+        <div ng-if="events !== undefined && !events.length" class="no-results">
+            <p>No events assigned</p>
+        </div>
     </ion-content>
 </ion-view>

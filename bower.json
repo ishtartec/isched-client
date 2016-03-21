@@ -9,6 +9,8 @@
     "ionic-filter-bar": "^1.1.1",
     "moment": "^2.12.0",
     "ion-datetime-picker": "^0.1.2",
-    "angular-messages": "1.4.3"
+    "angular-messages": "1.4.3",
+    "angular-local-storage": "^0.2.7",
+    "moment-timezone": "^0.5.2"
   }
 }
